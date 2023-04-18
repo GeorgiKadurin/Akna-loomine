@@ -3,9 +3,30 @@ import random
 import sys
 
 def Maja(x,y,laius,kõrgus,pind,värv):
-    punktid=[(x,y- ((3/4.0) *kõrgus)), (x,y), (x+laius,y), (x+laius,y- (3/4.0) * kõrgus), (x,y- ((3/4.0) * kõrgus)),(x+laius/2.0,y-kõrgus),(x+laius,y-(3/4.0) *kõrgus)]
+    punktid=[(x,y- ((3/5.0) *kõrgus)), (x,y), (x+laius,y), (x+laius,y- (3/5.0) * kõrgus), (x,y- ((3/5.0) * kõrgus)),(x+laius/2.0,y-kõrgus),(x+laius,y-(3/5.0) *kõrgus)]
     suurus=random.randint(1,10)
     pygame.draw.lines(pind,värv,False,punktid,suurus)
+
+
+def Uks(x,y,laius,kõrgus,pind,värv):
+    punktid=[(x,y),(x,y-(1/2)*kõrgus),(x+(1/3)*laius,y-(1/2)*kõrgus),(x+(1/3)*laius,y),(x,y)]
+    suurus=random.randint(1,10)
+    pygame.draw.lines(pind,värv,True,punktid,suurus)
+
+
+
+def Akn(x,y,laius,kõrgus,pind,värv):
+    punktid=[(x,y),(x,y-kõrgus),(x+laius,y-kõrgus),(x+laius,y),(x,y)]
+    suurus=random.randint(1,10)
+    pygame.draw.lines(pind,värv,True,punktid,suurus)
+
+
+def akn2(x,y,laius,kõrgus,pind,värv):
+    punktid=[(x,y),(x,y-kõrgus),(x+laius,y-kõrgus),(x+laius,y),(x,y)]
+    suurus=random.randint(1,10)
+    pygame.draw.lines(pind,värv,True,punktid,suurus)
+
+
 
 r=random.randint(0,255)
 g=random.randint(0,255)
@@ -28,27 +49,40 @@ pind.fill(fon)
 
 
 
-Maja(100,400,300,400,pind,majavärv)
+Maja(100,400,500,400,pind,majavärv)
+Uks(100,400,300,400,pind,majavärv)
+Akn(340,300,190,100,pind,majavärv)
+akn2(285,140,130,90,pind,majavärv)  #2)150 вниз, 1)280 перемещ в право, 4) 90 верхнее ребро вниз или вверх , 3)130 размер больше меньше
 pygame.display.flip()
 
 
-lil=pygame.Rect(215,22,70,70)
-pygame.draw.ellipse(pind, (250,250,0), lil)
 
-ristkülik=pygame.Rect(297,217,100,180)                            
-pygame.draw.rect(pind,(205,133,63),ristkülik)
+#lopp_x=360
+#lopp_y=165
+#for i in range(25):
+#    pygame.draw.line(pind,majavärv,(100,400),(lopp_x,lopp_y),2 )
+#    lopp_x-=10
+#    lopp_y+=1
 
-lil=pygame.Rect(370,300,15,15)
-pygame.draw.ellipse(pind, (250,250,0), lil)
+#lil=pygame.Rect(215,22,70,70)
+#pygame.draw.ellipse(pind, (250,250,0), lil)
 
-ristkülik=pygame.Rect(120,165,100,100)                            
-pygame.draw.rect(pind,(250,250,0),ristkülik)
+#ristkülik=pygame.Rect(297,217,100,180)                            
+#pygame.draw.rect(pind,(205,133,63),ristkülik)
 
-ristkülik=pygame.Rect(167,165,6,100)                            
-pygame.draw.rect(pind,(205,133,63),ristkülik)
+#lil=pygame.Rect(370,300,15,15)
+#pygame.draw.ellipse(pind, (250,250,0), lil)
 
-ristkülik=pygame.Rect(120,212,100,6)                            
-pygame.draw.rect(pind,(205,133,63),ristkülik)
+#ristkülik=pygame.Rect(120,165,100,100)                            
+#pygame.draw.rect(pind,(250,250,0),ristkülik)
+
+#ristkülik=pygame.Rect(167,165,6,100)                            
+#pygame.draw.rect(pind,(205,133,63),ristkülik)
+
+#ristkülik=pygame.Rect(120,212,100,6)                            
+#pygame.draw.rect(pind,(205,133,63),ristkülik)
+
+
 
 
 
@@ -84,4 +118,19 @@ while True:
         sys.exit()
 
 pygame.quit() 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
