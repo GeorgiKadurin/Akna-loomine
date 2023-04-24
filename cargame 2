@@ -1,3 +1,251 @@
+import pygame,sys
+from turtle import pos
+import random
+        
+        
+
+
+
+
+
+
+def liik():
+    global posX,posY,sammX,sammY
+    if posX>=X-mesilane.get_rect().width or posX<0:  # Оталкивание от стеноки по оси X
+        sammX=-sammX
+
+    if posY>=Y-mesilane.get_rect().height or posY<0:  # вверх/вниз после косания нижней границы
+        sammY=-sammY
+
+    posX+=sammX
+    posY+=sammY
+
+    ekraan.blit(mesilane,(posX,posY))
+    pygame.display.flip()
+    ekraan.fill(fon)
+
+
+def liik2():
+    global posX,posY,sammX,sammY
+    if posX==0 and posY==0:
+        sammX=1
+        sammY=0
+    if posX==X-mesilane.get_rect().width and posY<=Y-mesilane.get_rect().height:
+        sammX=0
+        sammY=1
+    if posX<=X-mesilane.get_rect().width and posY==Y-mesilane.get_rect().height:
+        sammX=1
+        sammY=0
+        sammX=-sammX
+    if posX==0 and posY>=Y-mesilane.get_rect().height:
+        sammX=0
+        sammY=1
+        sammY=-sammY
+    posX+=sammX
+    posY+=sammY
+    ekraan.blit(mesilane,(posX,posY))
+    pygame.display.flip()
+    ekraan.fill(fon)
+pygame.quit()
+
+
+def liik3():
+    global posX,posY,sammX,sammY
+    if posX==0 and posY==0:
+        sammX=0
+        sammY=1
+    if posY==Y-mesilane.get_rect().height and posX<=X-mesilane.get_rect().width:
+        sammX=1
+        sammY=0
+    if posY<=Y-mesilane.get_rect().height and posX==X-mesilane.get_rect().width:
+        sammX=0
+        sammY=1
+        sammY=-sammY
+    if posY==0 and posX>=X-mesilane.get_rect().width:
+        sammX=1
+        sammY=0
+        sammX=-sammX
+    posX+=sammX
+    posY+=sammY
+    ekraan.blit(mesilane,(posX,posY))
+    pygame.display.flip()
+    ekraan.fill(fon)
+
+
+while True:
+        print("Valige:")
+        print("1 - Seinalt tõrjumine ") #Отталкивание от стенки
+        print("2 - Päripäeva")  #по часовой
+        print("3 - Vastupäeva")  #против часовой
+        print("4 - Lõpp")
+
+        tegevust = int(input("Valige toiming: "))
+
+
+        pygame.init()
+        #värvid
+        kollane=[255,255,10]
+        punane=[255,0,0]
+        hall=[200,200,200]
+        roosa=[255,150,255]
+        roheline=[100,255,100]
+
+            #värvid2
+        r=random.randint(0,255)
+        g=random.randint(0,255)
+        b=random.randint(0,255)
+
+        fon=[r,g,b]
+
+            #ekraani suurus
+        X=640
+        Y=480
+        ekraan=pygame.display.set_mode([X,Y])
+        pygame.display.set_caption("Animatsion")
+        ekraan.fill(fon)
+        kell=pygame.time.Clock()
+        mesilane=pygame.image.load("ivi.jpg")
+        posX=X-mesilane.get_rect().width
+        posY=Y-mesilane.get_rect().height
+        lõpp=False
+        sammX=2
+        sammY=2
+
+
+
+
+        if tegevust==1:
+
+            while not lõpp:
+                kell.tick(100)
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                      sys.exit()
+                liik()
+
+
+        if tegevust==2:
+
+            while not lõpp:
+                kell.tick(100)
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                      sys.exit()
+                liik2()
+
+        if tegevust==3:
+
+            while not lõpp:
+                kell.tick(100)
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                      sys.exit()
+                liik3()
+
+        ekraan.fill(fon)
+        pygame.quit()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from turtle import pos
 import pygame,sys
 
