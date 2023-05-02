@@ -118,32 +118,16 @@ while not gameover:
           sys.exit()
     liik()
 
-        # Отрисовка объектов ruut и ruut2
-    pygame.draw.rect(screen, red, [610, posY, 12, 100], 0, 10)
-    pygame.draw.rect(screen, blue, [20, posY2, 12, 100], 0, 10)
 
-    # Проверка столкновения с объектом ruut
-    if player.colliderect(pygame.Rect(610, posY, 12, 100)):
-        score += 1
-        print("Score:", score)
-
-    # Проверка столкновения с объектом ruut2
-    if player.colliderect(pygame.Rect(20, posY2, 12, 100)):
-        score += 1
-        print("Score:", score)
-
-    pygame.display.flip()
-    screen.fill(lblue)
-
-    if pos3 > screenX - playerImage.get_rect().width or posX3 < 0:
+    if posX3 > screenX - playerImage.get_rect().width or posX3 < 0:
         
-        if ruut:
+        if posY3 > 150 and posY3 < 368:
             score += 1
         print(score)
     
-    if posY3 > screenY - playerImage.get_rect().height or posX3 < 0:
+    if posY3 > screenY - playerImage.get_rect().height or posY3 < 0:
       
-        if ruut2:
+        if posX3 > 150 and posX3 < 290:
             score += 1
         print(score)
     
@@ -229,6 +213,20 @@ pygame.quit
 #    pygame.display.flip()
 #    screen.fill(lblue)
 #pygame.quit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
