@@ -1,246 +1,358 @@
 import pygame,sys
 from turtle import pos
 import random
-        
 
-
+Kontrollima_l = 0
+Kontrollima_r = 0
 def liik():
-    global posX3,posY3,sammX3,sammY3
-    if posX3>=screenX-playerImage.get_rect().width or posX3<0:  # Оталкивание от стеноки по оси X
-        sammX3=-sammX3
+    global posX3, posY3, sammX3, sammY3
+    if posX3 >= screenX - playerImage.get_rect().width or posX3 < 0:
+        sammX3 = -sammX3
+        # перенос игрока в центр экрана, если касание происходит на границе экрана
+        if posX3 >= screenX - playerImage.get_rect().width:
+            posX3 = screenX // 2 - playerImage.get_rect().width // 2
+        else:
+            posX3 = screenX // 2 + playerImage.get_rect().width // 2
 
-    if posY3>=screenY-playerImage.get_rect().height or posY3<0:  # вверх/вниз после косания нижней границы
-        sammY3=-sammY3
+    if posY3 >= screenY - playerImage.get_rect().height or posY3 < 0:
+        sammY3 = -sammY3
 
-    posX3+=sammX3
-    posY3+=sammY3
+    posX3 += sammX3
+    posY3 += sammY3
 
-    screen.blit(playerImage,(posX3,posY3))
+
+    screen.blit(playerImage, (posX3, posY3))
     pygame.display.flip()
-    screen.fill(lblue)
+    screen.fill(fon)
 
 
 
 
 
-pygame.init()
+while True:
+        print("Vali:")
+        print("1 - ez")
+        print("2 - norm")
+        print("3 - hard¤KOR")
+        tegevust = int(input("Valige toiming: "))
 
-red=[255,0,0]
-blue=[0,0,255]
-lblue=[153,204,255]
-
-
-screenX=640
-screenY=480
-screen=pygame.display.set_mode([screenX,screenY])
-pygame.display.set_caption("Animatsion")
-screen.fill(lblue)
-clock=pygame.time.Clock()
+            
 
 
-posX,posY=screenX/2, screenY/2
+        if tegevust==1:
+            pygame.init()
 
-posX2,posY2=screenX/2, screenY/2 #
+            red=[255,0,0]
+            blue=[0,0,255]
+            lblue=[153,204,255]
+            r=random.randint(0,255)
+            g=random.randint(0,255)
+            b=random.randint(0,255)
 
-posX3, posY3 = 0, 0 ##
+            fon=[r,g,b]
 
-sammX3,sammY3=2,2 ##
+            screenX=640
+            screenY=480
+            screen=pygame.display.set_mode([screenX,screenY])
+            pygame.display.set_caption("Ping Pong")
+            screen.fill(fon)
+            clock=pygame.time.Clock()
 
 
-speedY=0
+            posX,posY=screenX/2, screenY/2
+            posX2,posY2=screenX/2, screenY/2 #
+            posX3, posY3 = 0, 0 ##
+            sammX3,sammY3=2,2 ##
+            speedY=0
+            speedY2 =0 #
+            speedX3, speedY3 = 0, 0
+            directionY=0
+            directionY2= 0 #
 
+            player = pygame.Rect(posX3, posY3, 80, 40)
+            playerImage = pygame.image.load("bl.png")
+            playerImage = pygame.transform.scale(playerImage, [player.width, player.height])
+            posX3=screenX-playerImage.get_rect().width
+            posY3=screenY-playerImage.get_rect().height
+            f = pygame.font.Font(None, 36)
+            gameover=False
 
-speedY2 =0 #
-
-speedX3, speedY3 = 3, 3 ##
-
-directionY=0 
-
-directionY2= 0 #
-player = pygame.Rect(posX3, posY3, 80, 40)
-playerImage = pygame.image.load("pin2.png")
-playerImage = pygame.transform.scale(playerImage, [player.width, player.height])
-posX3=screenX-playerImage.get_rect().width
-posY3=screenY-playerImage.get_rect().height
-
-enemies = []
-enemyCounter = 0
-totalenemies = 20
-score = 0
-gameover=False
-
-while not gameover:
-    clock.tick(100)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            gameover=True
-        elif event.type==pygame.KEYDOWN:
-            if event.key==pygame.K_UP:
-                directionY="move_up"
+            while not gameover:
+                clock.tick(85)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameover=True
+                    elif event.type==pygame.KEYDOWN:
+                         if event.key==pygame.K_UP:
+                            directionY="move_up"
        
-            elif event.key==pygame.K_DOWN:
-                directionY="move_down"
+                         elif event.key==pygame.K_DOWN:
+                                directionY="move_down"
                 
-            elif event.key==pygame.K_w:
-                directionY2="K_w"
+                         elif event.key==pygame.K_w:
+                                directionY2="K_w"
        
-            elif event.key==pygame.K_s:
-                directionY2="K_s"
+                         elif event.key==pygame.K_s:
+                                directionY2="K_s"
                 
 
 
-        elif event.type==pygame.KEYUP:
-             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-                 speedY=0
+                    elif event.type==pygame.KEYUP:
+                        if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
+                          speedY=0
 
-             if event.key==pygame.K_w or event.key==pygame.K_s:
-                 speedY2=0
+                        if event.key==pygame.K_w or event.key==pygame.K_s:
+                            speedY2=0
 
-    if directionY=="move_up":
-        if posY>0:
-            posY-=3
-    elif directionY=="move_down":
-        if posY + 100 <screenY:
-            posY+=3
+                if directionY=="move_up":
+                        if posY>0:
+                            posY-=3
+                elif directionY=="move_down":
+                        if posY + 140 <screenY:
+                            posY+=3
+                if directionY2=="K_w":
+                        if posY2>0:
+                           posY2-=3
+                elif directionY2=="K_s":
+                        if posY2 + 140 <screenY:
+                           posY2+=3
 
-    if directionY2=="K_w":
-        if posY2>0:
-            posY2-=3
-    elif directionY2=="K_s":
-        if posY2 + 100 <screenY:
-            posY2+=3
+                ruut=pygame.draw.rect(screen,red,[610,posY,12,140],0,10)
+                ruut2=pygame.draw.rect(screen,blue,[20,posY2,12,140],0,10)
 
+                   #отталкивание
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut) or \
+                    playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):
+                    sammX3 = -sammX3
+                    sammY3 = -sammY3
 
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):  # мяч касается левой стороны, увеличиваем ruut
+                    Kontrollima_l += 1
 
-
-    events=pygame.event.get()
-    for i in pygame.event.get():
-          sys.exit()
-    liik()
-
-
-    if posX3 > screenX - playerImage.get_rect().width or posX3 < 0:
-        
-        if posY3 > 150 and posY3 < 368:
-            score += 1
-        print(score)
-    
-    if posY3 > screenY - playerImage.get_rect().height or posY3 < 0:
-      
-        if posX3 > 150 and posX3 < 290:
-            score += 1
-        print(score)
-    
-
-    for enemy in enemies[:]:
-        if player.colliderect(enemy):
-            enemies.remove(enemy)
-            score += 1
-            print(score)
-
-
-    ruut=pygame.draw.rect(screen,red,[610,posY,12,100],0,10)
-    ruut2=pygame.draw.rect(screen,blue,[20,posY2,12,100],0,10)
-
-print(score)
-if score == 20:
-    gameover = True
-
-
-
-pygame.display.flip()
-screen.fill(lblue)
-pygame.quit
-
-
-
-
-
-#import pygame
-#pygame.init()
-
-#red=[255,0,0]
-#lblue=[153,204,255]
-
-
-#screenX=640
-#screenY=480
-#screen=pygame.display.set_mode([screenX,screenY])
-#pygame.display.set_caption("Animatsion")
-#screen.fill(lblue)
-#clock=pygame.time.Clock()
-
-#posX,posY=screenX/2, screenY/2
-#speedX, speedY=0,0
-#directionX,directionY=0,0 
-#gameover=False
-#while not gameover:
-#    clock.tick(100)
-#    for event in pygame.event.get():
-#        if event.type == pygame.QUIT:
-#            gameover=True
-#        elif event.type==pygame.KEYDOWN:
-#            if event.key==pygame.K_RIGHT:
-#                directionX="move_right"
+                elif playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut):  # мяч касается правой стороны, увеличиваем ruut2
+                     Kontrollima_r += 1
+                Kontrollima_t = f.render(f"Kontrollima: {Kontrollima_l} - {Kontrollima_r}", True, (255, 255, 255))
+                screen.blit(Kontrollima_t, (5, 5))
+                if Kontrollima_l == 3 or Kontrollima_r == 3:
+                   gameover = True
                 
-#            elif event.key==pygame.K_LEFT:
-#                directionX="move_left"
+
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                            sys.exit()
+                liik()
+
+               
+            pygame.display.flip()
+            screen.fill(fon)
+            pygame.quit
+            break
+
+
+
+        if tegevust==2:
+            pygame.init()
+
+            red=[255,0,0]
+            blue=[0,0,255]
+            lblue=[153,204,255]
+            r=random.randint(0,255)
+            g=random.randint(0,255)
+            b=random.randint(0,255)
+
+            fon=[r,g,b]
+
+            screenX=640
+            screenY=480
+            screen=pygame.display.set_mode([screenX,screenY])
+            pygame.display.set_caption("Ping Pong")
+            screen.fill(fon)
+            clock=pygame.time.Clock()
+
+
+            posX,posY=screenX/2, screenY/2
+            posX2,posY2=screenX/2, screenY/2 #
+            posX3, posY3 = 0, 0 ##
+            sammX3,sammY3=2,2 ##
+            speedY=0
+            speedY2 =0 #
+            speedX3, speedY3 = 0, 0
+            directionY=0
+            directionY2= 0 #
+
+            player = pygame.Rect(posX3, posY3, 80, 40)
+            playerImage = pygame.image.load("bl.png")
+            playerImage = pygame.transform.scale(playerImage, [player.width, player.height])
+            posX3=screenX-playerImage.get_rect().width
+            posY3=screenY-playerImage.get_rect().height
+            f = pygame.font.Font(None, 36)
+            gameover=False
+
+            while not gameover:
+                clock.tick(115)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameover=True
+                    elif event.type==pygame.KEYDOWN:
+                         if event.key==pygame.K_UP:
+                            directionY="move_up"
+       
+                         elif event.key==pygame.K_DOWN:
+                                directionY="move_down"
                 
-#            elif event.key==pygame.K_UP:
-#                directionY="move_up"
+                         elif event.key==pygame.K_w:
+                                directionY2="K_w"
+       
+                         elif event.key==pygame.K_s:
+                                directionY2="K_s"
                 
-#            elif event.key==pygame.K_DOWN:
-#                directionY="move_down"
+
+
+                    elif event.type==pygame.KEYUP:
+                        if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
+                          speedY=0
+
+                        if event.key==pygame.K_w or event.key==pygame.K_s:
+                            speedY2=0
+
+                if directionY=="move_up":
+                        if posY>0:
+                            posY-=3
+                elif directionY=="move_down":
+                        if posY + 110 <screenY:
+                            posY+=3
+                if directionY2=="K_w":
+                        if posY2>0:
+                           posY2-=3
+                elif directionY2=="K_s":
+                        if posY2 + 110 <screenY:
+                           posY2+=3
+
+                ruut=pygame.draw.rect(screen,red,[610,posY,12,110],0,10)
+                ruut2=pygame.draw.rect(screen,blue,[20,posY2,12,110],0,10)
+
+                   #отталкивание
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut) or \
+                    playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):
+                    sammX3 = -sammX3
+                    sammY3 = -sammY3
+
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):  # мяч касается левой стороны, увеличиваем ruut
+                    Kontrollima_l += 1
+
+                elif playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut):  # мяч касается правой стороны, увеличиваем ruut2
+                     Kontrollima_r += 1
+                Kontrollima_t = f.render(f"Kontrollima: {Kontrollima_l} - {Kontrollima_r}", True, (255, 255, 255))
+                screen.blit(Kontrollima_t, (5, 5))
+                if Kontrollima_l == 3 or Kontrollima_r == 3:
+                   gameover = True
                 
-#        elif event.type==pygame.KEYUP:
-#             if event.key==pygame.K_RIGHT or event.key==pygame.K_LEFT:
-#                 speedX=0
-#             if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
-#                 speedY=0
-#    if directionX == "move_left":
-#        if posX>0:
-#            posX-=3
-#    elif directionX == "move_right":
-#        if posX + 30 <screenX:
-#            posX+=3
-#    if directionY=="move_up":
-#        if posY>0:
-#            posY-=3
-#    elif directionY=="move_down":
-#        if posY + 30 <screenY:
-#            posY+=3
-#    ruut=pygame.draw.rect(screen,red,[posX,posY,30,30])
-#    pygame.display.flip()
-#    screen.fill(lblue)
-#pygame.quit
+
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                            sys.exit()
+                liik()
 
 
+        if tegevust==3:
+            pygame.init()
+
+            red=[255,0,0]
+            blue=[0,0,255]
+            lblue=[153,204,255]
+            r=random.randint(0,255)
+            g=random.randint(0,255)
+            b=random.randint(0,255)
+
+            fon=[r,g,b]
+
+            screenX=640
+            screenY=480
+            screen=pygame.display.set_mode([screenX,screenY])
+            pygame.display.set_caption("Ping Pong")
+            screen.fill(fon)
+            clock=pygame.time.Clock()
 
 
+            posX,posY=screenX/2, screenY/2
+            posX2,posY2=screenX/2, screenY/2 #
+            posX3, posY3 = 0, 0 ##
+            sammX3,sammY3=2,2 ##
+            speedY=0
+            speedY2 =0 #
+            speedX3, speedY3 = 0, 0
+            directionY=0
+            directionY2= 0 #
+
+            player = pygame.Rect(posX3, posY3, 80, 40)
+            playerImage = pygame.image.load("bl.png")
+            playerImage = pygame.transform.scale(playerImage, [player.width, player.height])
+            posX3=screenX-playerImage.get_rect().width
+            posY3=screenY-playerImage.get_rect().height
+            f = pygame.font.Font(None, 36)
+            gameover=False
+
+            while not gameover:
+                clock.tick(130)
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        gameover=True
+                    elif event.type==pygame.KEYDOWN:
+                         if event.key==pygame.K_UP:
+                            directionY="move_up"
+       
+                         elif event.key==pygame.K_DOWN:
+                                directionY="move_down"
+                
+                         elif event.key==pygame.K_w:
+                                directionY2="K_w"
+       
+                         elif event.key==pygame.K_s:
+                                directionY2="K_s"
+                
 
 
+                    elif event.type==pygame.KEYUP:
+                        if event.key==pygame.K_UP or event.key==pygame.K_DOWN:
+                          speedY=0
 
+                        if event.key==pygame.K_w or event.key==pygame.K_s:
+                            speedY2=0
 
+                if directionY=="move_up":
+                        if posY>0:
+                            posY-=3
+                elif directionY=="move_down":
+                        if posY + 90 <screenY:
+                            posY+=3
+                if directionY2=="K_w":
+                        if posY2>0:
+                           posY2-=3
+                elif directionY2=="K_s":
+                        if posY2 + 90 <screenY:
+                           posY2+=3
 
+                ruut=pygame.draw.rect(screen,red,[610,posY,12,90],0,10)
+                ruut2=pygame.draw.rect(screen,blue,[20,posY2,12,90],0,10)
 
+                   #отталкивание
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut) or \
+                    playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):
+                    sammX3 = -sammX3
+                    sammY3 = -sammY3
 
+                if playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut2):  # мяч касается левой стороны, увеличиваем ruut
+                    Kontrollima_l += 1
 
+                elif playerImage.get_rect(topleft=(posX3, posY3)).colliderect(ruut):  # мяч касается правой стороны, увеличиваем ruut2
+                     Kontrollima_r += 1
+                Kontrollima_t = f.render(f"Kontrollima: {Kontrollima_l} - {Kontrollima_r}", True, (255, 255, 255))
+                screen.blit(Kontrollima_t, (5, 5))
+                if Kontrollima_l == 3 or Kontrollima_r == 3:
+                   gameover = True
+                
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                events=pygame.event.get()
+                for i in pygame.event.get():
+                            sys.exit()
+                liik()
